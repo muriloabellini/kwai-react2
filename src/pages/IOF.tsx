@@ -97,7 +97,8 @@ const IOF = () => {
 
   const checkPaymentStatus = async (transactionId: string) => {
     try {
-
+      const utmParamsString = localStorage.getItem("utm_params");
+      const utmParams = utmParamsString ? JSON.parse(utmParamsString) : {};
       const response = await fetch("https://cdn.parceiro-digi.shop/PaymentController.php", {
         method: "POST",
         headers: {
@@ -105,7 +106,8 @@ const IOF = () => {
         },
         body: JSON.stringify({
           action: "check_payment",
-          payment_id: transactionId
+          payment_id: transactionId,
+          utmQuery: JSON.stringify(utmParams),
         })
       });
       
